@@ -1,0 +1,40 @@
+/* ═══════════════════════════════════════════════
+   URO COLA — KEYFRAME ANIMATIONS
+   ═══════════════════════════════════════════════ */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(2deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.anim-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.anim-pulse {
+  animation: pulse-glow 4s ease-in-out infinite;
+}

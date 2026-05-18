@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URO Cola | প্রতিটি চুমুকে শুরু হয় একটি গল্প</title>
+  <meta name="description" content="URO Cola — Bangladesh's most cinematic cola experience. Every sip starts a story.">
+
+  <!-- Fonts: Inter + Playfair + Hind Siliguri (Bangla) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursor-follower"></div>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-inner" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+      <h1 class="preloader-logo">URO</h1>
+      <p class="preloader-bn" style="margin-bottom: 2rem;">প্রতিটি চুমুকে শুরু হয় একটি গল্প</p>
+      <div class="preloader-bar-wrap"><div class="preloader-bar" id="preloader-bar"></div></div>
+      <span class="preloader-percent" id="preloader-percent" style="margin-top: 1rem;">0%</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-brand">
+      <a href="#" class="nav-logo">URO</a>
+    </div>
+    <div class="nav-links">
+      <a href="#story" class="nav-link">গল্প</a>
+      <a href="#flavors" class="nav-link">ফ্লেভার</a>
+      <a href="#community" class="nav-link">কমিউনিটি</a>
+      <a href="#products" class="nav-link">Products</a>
+    </div>
+    <div class="nav-action">
+      <a href="#experience" class="btn btn-primary nav-cta">অভিজ্ঞতা শুরু করুন</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 1 — HERO SEQUENCE (Scrollytelling)
+       400vh sticky canvas like Coca-Cola 3D site
+       ═══════════════════════════════════════ -->
+  <section class="hero-sequence" id="hero">
+    <div class="sticky-canvas-wrap">
+      <canvas id="hero-canvas"></canvas>
+
+      <!-- Atmospheric background glow layers -->
+      <div class="atmo-layer atmo-blue"></div>
+      <div class="atmo-layer atmo-pink"></div>
+      <div class="atmo-layer atmo-gold"></div>
+
+      <!-- Particle canvas -->
+      <canvas id="particle-canvas" class="particle-canvas"></canvas>
+
+      <!-- Overlay text beats (synced to scroll) -->
+      <div class="seq-overlay" id="seq-beat-0">
+        <div class="seq-beat-inner seq-center">
+          <span class="label-tag">Bangladesh's Own</span>
+          <h1 class="seq-title">URO COLA</h1>
+          <p class="seq-sub">প্রতিটি চুমুকে শুরু হয় একটি গল্প</p>
+          <p class="seq-sub-en">Every Sip Starts a Story</p>
+          <div class="seq-cta-row">
+            <a href="https://zenryse.com" target="_blank" class="btn btn-primary">তোমার গল্প শুরু করো</a>
+            <a href="#story" class="btn btn-ghost">গল্পটা জানুন</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="seq-overlay" id="seq-beat-1">
+        <div class="seq-beat-inner seq-left">
+          <span class="label-tag">Crafted for You</span>
+          <h2 class="seq-title-sm">আড্ডার সেরা<br>সঙ্গী</h2>
+          <p class="seq-sub">ছাদের আড্ডা থেকে ক্যাফের টেবিল —<br>URO সবসময় তোমার পাশে।</p>
+        </div>
+      </div>
+
+      <div class="seq-overlay" id="seq-beat-2">
+        <div class="seq-beat-inner seq-right">
+          <span class="label-tag">Pure Refreshment</span>
+          <h2 class="seq-title-sm">একটু আলাদা,<br>অনেক বেশি</h2>
+          <p class="seq-sub">স্বাদে, অনুভূতিতে,<br>এবং প্রতিটি চুমুকে।</p>
+        </div>
+      </div>
+
+      <div class="seq-overlay" id="seq-beat-3">
+        <div class="seq-beat-inner seq-center" style="margin-bottom: 15vh;">
+          <h2 class="seq-title" style="line-height: 1.3;">তোমার গল্প<br><span class="text-gradient-gold">এখনই শুরু হোক</span></h2>
+          <div class="seq-cta-row">
+            <a href="#flavors" class="btn btn-gold">Explore Flavours ↓</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="scroll-indicator">
+        <span class="scroll-text">স্ক্রোল করুন</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 2 — EMOTIONAL BRAND STORY
+       Horizontal pin (3 panels)
+       ═══════════════════════════════════════ -->
+  <section class="story-section" id="story">
+    <div class="story-track" id="story-track">
+
+      <div class="story-panel">
+        <div class="story-panel-bg" style="background:radial-gradient(circle at 60% 40%, rgba(168,216,234,0.15) 0%, transparent 70%)"></div>
+        <div class="story-panel-content">
+          <span class="label-tag">ছাদের আড্ডা</span>
+          <h2 class="story-heading">মুহূর্তগুলো<br>হয়ে যায়<br><em class="text-gradient-brand">স্মৃতি।</em></h2>
+          <p class="story-para">বন্ধুদের সাথে সন্ধ্যার আড্ডায়, একটা ঠান্ডা URO-ই যথেষ্ট।</p>
+        </div>
+        <div class="story-panel-img">
+          <img src="assets/lifestyle/1.png" alt="Friends on rooftop">
+        </div>
+      </div>
+
+      <div class="story-panel">
+        <div class="story-panel-bg" style="background:radial-gradient(circle at 40% 60%, rgba(255,170,181,0.15) 0%, transparent 70%)"></div>
+        <div class="story-panel-content">
+          <span class="label-tag">ক্যাফে মোমেন্ট</span>
+          <h2 class="story-heading">কথাগুলো<br>রয়ে যায়<br><em class="text-gradient-brand">বহুক্ষণ।</em></h2>
+          <p class="story-para">প্রতিটি কথোপকথন, প্রতিটি হাসি — URO-র সাথে আরও মিষ্টি।</p>
+        </div>
+        <div class="story-panel-img">
+          <img src="assets/lifestyle/2.png" alt="Cafe moments">
+        </div>
+      </div>
+
+      <div class="story-panel">
+        <div class="story-panel-bg" style="background:radial-gradient(circle at 50% 50%, rgba(212,168,67,0.12) 0%, transparent 70%)"></div>
+        <div class="story-panel-content">
+          <span class="label-tag">Every Sip</span>
+          <h2 class="story-heading">প্রতিটি চুমুকে<br>শুরু হয়<br><em class="text-gradient-gold">একটি গল্প।</em></h2>
+          <p class="story-para">URO Cola — বাংলাদেশের প্রজন্মের পানীয়।</p>
+        </div>
+        <div class="story-panel-img">
+          <img src="assets/lifestyle/3.png" alt="Story moments">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 3 — FLAVOUR UNIVERSE
+       Sticky product with color transitions
+       ═══════════════════════════════════════ -->
+  <section class="flavor-section" id="flavors">
+    <div class="flavor-sticky">
+      <div class="flavor-product-col">
+        <div class="flavor-can-wrap">
+          <img src="assets/product/1.png" alt="URO Cola" class="flavor-can" id="flavor-can">
+          <div class="flavor-glow" id="flavor-glow"></div>
+        </div>
+      </div>
+      <div class="flavor-info-col">
+
+        <div class="flavor-item" data-color-bg="#0A0F1E" data-color-glow="rgba(168,216,234,0.5)">
+          <span class="label-tag">Bondhutto</span>
+          <h2 class="flavor-name">Friends Edition</h2>
+          <p class="flavor-desc">আড্ডার চিরন্তন সঙ্গী, প্রতিটি চুমুকে বন্ধুত্বের স্বাদ।</p>
+          <p class="flavor-desc-en">The bold original — crisp, refreshing, unforgettable.</p>
+        </div>
+
+        <div class="flavor-item" data-color-bg="#0F0A1A" data-color-glow="rgba(255,170,181,0.5)">
+          <span class="label-tag">Bhalobasha</span>
+          <h2 class="flavor-name">Love Edition</h2>
+          <p class="flavor-desc">মিষ্টি অনুভূতির ছোঁয়া — প্রেমের মতোই অদ্ভুত সুন্দর।</p>
+          <p class="flavor-desc-en">Sweet feeling — like a first crush in a bottle.</p>
+        </div>
+
+        <div class="flavor-item" data-color-bg="#0F0E08" data-color-glow="rgba(212,168,67,0.5)">
+          <span class="label-tag">Poribar</span>
+          <h2 class="flavor-name">Family Edition</h2>
+          <p class="flavor-desc">সবার সাথে শেয়ার করার আনন্দ — পরিবারের জন্য পারফেক্ট।</p>
+          <p class="flavor-desc-en">Joy of sharing — perfect for family moments.</p>
+        </div>
+
+        <div class="flavor-item" data-color-bg="#08100F" data-color-glow="rgba(100,220,180,0.4)">
+          <span class="label-tag">Shomaj</span>
+          <h2 class="flavor-name">Community Edition</h2>
+          <p class="flavor-desc">একসাথে মিলে বড় কিছু করার স্পৃহা।</p>
+          <p class="flavor-desc-en">The spirit of coming together as one.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 4 — QR / INTERACTIVE
+       ═══════════════════════════════════════ -->
+  <section class="qr-section" id="experience">
+    <div class="container">
+      <div class="qr-grid">
+        <div class="qr-content reveal-up">
+          <span class="label-tag">Story Spark</span>
+          <h2 class="qr-title text-cinematic">স্ক্যান করো।<br>গল্প খোলো।<br><span class="text-gradient-gold">শেয়ার করো।</span></h2>
+          <p class="qr-para">প্যাকেজিংয়ের QR স্ক্যান করে আনলক করো এক্সক্লুসিভ স্টোরি, ফ্লেভার কুইজ, এবং আরও অনেক কিছু।</p>
+          <a href="#" class="btn btn-gold">Flavour Quiz নাও →</a>
+        </div>
+        <div class="qr-visual reveal-up">
+          <div class="qr-card" id="qr-card">
+            <div class="qr-img-wrap">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://urocola.com/spark&bgcolor=0A0F1E&color=D4A843&margin=10" alt="URO QR Code">
+              <div class="qr-scan-line"></div>
+            </div>
+            <p class="qr-label">STORY SPARK</p>
+            <p class="qr-sub">তোমার বড় স্বপ্ন কি?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 5 — COMMUNITY / SOCIAL
+       ═══════════════════════════════════════ -->
+  <section class="social-section" id="community">
+    <div class="container social-header reveal-up">
+      <span class="label-tag">Community</span>
+      <h2 class="social-title text-cinematic">আমাদের সাথে<br><span class="text-gradient-brand">যোগ দাও</span></h2>
+    </div>
+    <div class="social-track-outer">
+      <div class="social-track" id="social-track">
+        <div class="social-card"><img src="assets/lifestyle/4.png" alt=""><div class="social-info"><span class="social-tag">#UROমুহূর্ত</span><span class="social-user">@sarah_dhaka</span></div></div>
+        <div class="social-card" style="margin-top:40px"><img src="assets/lifestyle/5.png" alt=""><div class="social-info"><span class="social-tag">#গল্পেরচুমুক</span><span class="social-user">@rafiq.ctg</span></div></div>
+        <div class="social-card"><img src="assets/lifestyle/6.png" alt=""><div class="social-info"><span class="social-tag">#UROCola</span><span class="social-user">@nisha.vibes</span></div></div>
+        <div class="social-card" style="margin-top:60px"><img src="assets/lifestyle/7.png" alt=""><div class="social-info"><span class="social-tag">#EverySip</span><span class="social-user">@tanvir_gen_z</span></div></div>
+        <div class="social-card"><img src="assets/lifestyle/8.png" alt=""><div class="social-info"><span class="social-tag">#আড্ডাVibes</span><span class="social-user">@meghna.bdesh</span></div></div>
+        <div class="social-card" style="margin-top:20px"><img src="assets/lifestyle/9.png" alt=""><div class="social-info"><span class="social-tag">#URO2026</span><span class="social-user">@jahid.creates</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 6 — PRODUCT SHOWCASE
+       ═══════════════════════════════════════ -->
+  <section class="product-section" id="products">
+    <div class="container">
+      <div class="section-header reveal-fade">
+        <span class="label-tag">The Collection</span>
+        <h2 class="section-title text-gradient-brand text-cinematic">URO কালেকশন</h2>
+      </div>
+      <div class="product-grid">
+        <div class="product-card reveal-up" style="--card-glow: rgba(168,216,234,0.3)">
+          <div class="product-img-wrap">
+            <img src="assets/product/1.png" alt="Friends Edition">
+            <div class="product-shine"></div>
+          </div>
+          <h3 class="product-name">Friends Edition</h3>
+          <p class="product-desc">আড্ডার চিরন্তন সঙ্গী</p>
+        </div>
+        <div class="product-card reveal-up" style="--card-glow: rgba(255,170,181,0.3); --delay: 0.1s">
+          <div class="product-img-wrap">
+            <img src="assets/product/2.png" alt="Love Edition">
+            <div class="product-shine"></div>
+          </div>
+          <h3 class="product-name">Love Edition</h3>
+          <p class="product-desc">মিষ্টি অনুভূতির ছোঁয়া</p>
+        </div>
+        <div class="product-card reveal-up" style="--card-glow: rgba(212,168,67,0.3); --delay: 0.2s">
+          <div class="product-img-wrap">
+            <img src="assets/product/3.png" alt="Family Edition">
+            <div class="product-shine"></div>
+          </div>
+          <h3 class="product-name">Family Edition</h3>
+          <p class="product-desc">শেয়ার করার আনন্দ</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 7 — FINAL EMOTIONAL CTA
+       ═══════════════════════════════════════ -->
+  <section class="cta-section" id="cta">
+    <div class="cta-bg-glow"></div>
+    <div class="container cta-inner">
+      <div class="cta-product reveal-fade">
+        <img src="assets/product/3.png" alt="URO Cola">
+      </div>
+      <div class="cta-text reveal-up">
+        <h2 class="cta-title text-cinematic">নতুন কিছুতে<br><span class="text-gradient-gold">চুমুক দাও।</span></h2>
+        <p class="cta-sub">Sip Into Something New.</p>
+        <div class="cta-btns">
+          <a href="https://zenryse.com" target="_blank" class="btn btn-primary">তোমার গল্প শুরু করো</a>
+          <a href="https://m.facebook.com/uro-cola" target="_blank" class="btn btn-ghost">Facebook এ ফলো করো</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <p class="footer-logo">URO</p>
+        <p class="footer-tagline">প্রতিটি চুমুকে শুরু হয় একটি গল্প</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://m.facebook.com/uro-cola" target="_blank" class="footer-social" aria-label="Facebook">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        </a>
+        <a href="#" class="footer-social" aria-label="Instagram">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <a href="#" class="footer-social" aria-label="Twitter">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+        </a>
+        <a href="#" class="footer-social" aria-label="YouTube">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+        </a>
+      </div>
+      <p class="footer-copy">© 2026 URO Cola Bangladesh. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- CDN Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- App Scripts -->
+  <script src="js/core/gsap-setup.js"></script>
+  <script src="js/core/lenis.js"></script>
+  <script src="js/modules/image-seq.js"></script>
+  <script src="js/modules/particles.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
