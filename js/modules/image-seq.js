@@ -28,36 +28,37 @@ class HeroSequence {
 
   // Called by main.js to initiate loading and report progress
   loadSequence(onProgress, onComplete) {
+    const INITIAL_FRAMES = Math.min(10, this.FRAMES); // Load first 10 frames to unlock site instantly
+    let initialLoaded = 0;
+    let hasCompleted = false;
+
     for (let i = 1; i <= this.FRAMES; i++) {
       const img = new Image();
       const frameNum = String(i).padStart(5, '0');
-      img.src = `assets/sequences/${frameNum}.png`;
       
-      img.onload = () => {
+      const checkComplete = () => {
         this.loadedFrames++;
-        onProgress(this.loadedFrames / this.FRAMES);
+        if (i <= INITIAL_FRAMES) {
+          initialLoaded++;
+          onProgress(initialLoaded / INITIAL_FRAMES);
+        }
         
-        if (this.loadedFrames === this.FRAMES) {
+        // Unlock site immediately after initial batch loads
+        if (initialLoaded >= INITIAL_FRAMES && !hasCompleted) {
+          hasCompleted = true;
           this.sequenceLoaded = true;
           this.setup();
           this.draw(0);
           onComplete();
         }
       };
-      
-      img.onerror = () => {
-        // Fallback for missing frames
-        this.loadedFrames++;
-        onProgress(this.loadedFrames / this.FRAMES);
-        if (this.loadedFrames === this.FRAMES) {
-          this.sequenceLoaded = true;
-          this.setup();
-          this.draw(0);
-          onComplete();
-        }
-      };
+
+      img.onload = checkComplete;
+      img.onerror = checkComplete;
       
       this.images.push(img);
+      // Trigger download
+      img.src = `assets/sequences/${frameNum}.png`;
     }
   }
 

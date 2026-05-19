@@ -109,22 +109,42 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.ticker.lagSmoothing(0);
     }
 
-    /* ── Story Horizontal Scroll ── */
-    const track = document.getElementById('story-track');
-    if (track) {
-      const panels = track.querySelectorAll('.story-panel');
-      gsap.to(track, {
-        x: () => -(track.scrollWidth - window.innerWidth),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.story-section',
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 0.8,
-          invalidateOnRefresh: true,
-        }
-      });
-    }
+    const mm = gsap.matchMedia();
+
+    // Desktop and Landscape Tablet animations (>= 1025px)
+    mm.add("(min-width: 1025px)", () => {
+      /* ── Story Horizontal Scroll ── */
+      const track = document.getElementById('story-track');
+      if (track) {
+        gsap.to(track, {
+          x: () => -(track.scrollWidth - window.innerWidth),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.story-section',
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 0.8,
+            invalidateOnRefresh: true,
+          }
+        });
+      }
+
+      /* ── Social track auto-scroll ── */
+      const socialTrack = document.getElementById('social-track');
+      if (socialTrack) {
+        gsap.to(socialTrack, {
+          x: () => -(socialTrack.scrollWidth - window.innerWidth + 96),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.social-section',
+            start: 'top 70%',
+            end: 'bottom 30%',
+            scrub: 1.5,
+            invalidateOnRefresh: true,
+          }
+        });
+      }
+    });
 
     /* ── Flavor Sticky Section ── */
     const flavorItems = document.querySelectorAll('.flavor-item');
@@ -148,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
           scrub: 1.2,
           onUpdate: (self) => {
             const p = self.progress;
-            const active = Math.floor(p * 0.99 * total); // ensure we don't hit index out of bounds
+            const active = Math.min(Math.floor(p * 0.99 * total), total - 1); // ensure no out of bounds
             flavorItems.forEach((el, j) => el.classList.toggle('active', j === active));
 
             // Change glow color
@@ -188,25 +208,10 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    /* ── Social track auto-scroll ── */
-    const socialTrack = document.getElementById('social-track');
-    if (socialTrack) {
-      gsap.to(socialTrack, {
-        x: () => -(socialTrack.scrollWidth - window.innerWidth + 96),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.social-section',
-          start: 'top 70%',
-          end: 'bottom 30%',
-          scrub: 1.5,
-          invalidateOnRefresh: true,
-        }
-      });
-    }
-
-    /* ── QR Card 3D tilt ── */
+    /* ── QR Card 3D tilt (Desktop only) ── */
     const qrCard = document.getElementById('qr-card');
-    if (qrCard) {
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (qrCard && !isTouch) {
       qrCard.addEventListener('mousemove', e => {
         const r = qrCard.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width  - 0.5;
@@ -240,24 +245,26 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollTrigger: { trigger: card, start: 'top 88%', once: true }
       });
       
-      card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -12;
-        const rotateY = ((x - centerX) / centerX) * 12;
-        gsap.to(card, { rotateX, rotateY, scale: 1.05, duration: 0.3, ease: 'power2.out', transformPerspective: 1000 });
-        
-        const img = card.querySelector('.product-img-wrap img');
-        if(img) gsap.to(img, { x: rotateY * -1, y: rotateX * 1, scale: 1.15, duration: 0.3, ease: 'power2.out' });
-      });
-      card.addEventListener('mouseleave', () => {
-        gsap.to(card, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.6, ease: 'power2.out' });
-        const img = card.querySelector('.product-img-wrap img');
-        if(img) gsap.to(img, { x: 0, y: 0, scale: 1, duration: 0.6, ease: 'power2.out' });
-      });
+      if (!isTouch) {
+        card.addEventListener('mousemove', e => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -12;
+          const rotateY = ((x - centerX) / centerX) * 12;
+          gsap.to(card, { rotateX, rotateY, scale: 1.05, duration: 0.3, ease: 'power2.out', transformPerspective: 1000 });
+          
+          const img = card.querySelector('.product-img-wrap img');
+          if(img) gsap.to(img, { x: rotateY * -1, y: rotateX * 1, scale: 1.15, duration: 0.3, ease: 'power2.out' });
+        });
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.6, ease: 'power2.out' });
+          const img = card.querySelector('.product-img-wrap img');
+          if(img) gsap.to(img, { x: 0, y: 0, scale: 1, duration: 0.6, ease: 'power2.out' });
+        });
+      }
     });
 
     /* ── Flavor Can 3D Hover & Float ── */
@@ -266,40 +273,42 @@ document.addEventListener('DOMContentLoaded', () => {
       // Independent fluid float (eliminates scroll lag)
       gsap.to(flavorCanWrap, { y: -15, duration: 2.5, ease: 'sine.inOut', yoyo: true, repeat: -1 });
 
-      flavorCanWrap.addEventListener('mousemove', e => {
-        const rect = flavorCanWrap.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        // Reduced rotation angles to prevent 2D paper-flattening effect
-        const rotateX = ((y - centerY) / centerY) * -6;
-        const rotateY = ((x - centerX) / centerX) * 6;
-        
-        // Dynamic drop shadow to enhance 3D volume
-        const shadowX = rotateY * -3;
-        const shadowY = rotateX * 3;
-        
-        gsap.to(flavorCanWrap, { 
-          rotateX, 
-          rotateY, 
-          scale: 1.05, 
-          filter: `drop-shadow(${shadowX}px ${shadowY}px 25px rgba(0,0,0,0.6))`,
-          duration: 0.3, 
-          ease: 'power2.out', 
-          transformPerspective: 1200 
+      if (!isTouch) {
+        flavorCanWrap.addEventListener('mousemove', e => {
+          const rect = flavorCanWrap.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          // Reduced rotation angles to prevent 2D paper-flattening effect
+          const rotateX = ((y - centerY) / centerY) * -6;
+          const rotateY = ((x - centerX) / centerX) * 6;
+          
+          // Dynamic drop shadow to enhance 3D volume
+          const shadowX = rotateY * -3;
+          const shadowY = rotateX * 3;
+          
+          gsap.to(flavorCanWrap, { 
+            rotateX, 
+            rotateY, 
+            scale: 1.05, 
+            filter: `drop-shadow(${shadowX}px ${shadowY}px 25px rgba(0,0,0,0.6))`,
+            duration: 0.3, 
+            ease: 'power2.out', 
+            transformPerspective: 1200 
+          });
         });
-      });
-      flavorCanWrap.addEventListener('mouseleave', () => {
-        gsap.to(flavorCanWrap, { 
-          rotateX: 0, 
-          rotateY: 0, 
-          scale: 1, 
-          filter: `drop-shadow(0px 0px 0px rgba(0,0,0,0))`,
-          duration: 0.6, 
-          ease: 'power2.out' 
+        flavorCanWrap.addEventListener('mouseleave', () => {
+          gsap.to(flavorCanWrap, { 
+            rotateX: 0, 
+            rotateY: 0, 
+            scale: 1, 
+            filter: `drop-shadow(0px 0px 0px rgba(0,0,0,0))`,
+            duration: 0.6, 
+            ease: 'power2.out' 
+          });
         });
-      });
+      }
     }
 
   }

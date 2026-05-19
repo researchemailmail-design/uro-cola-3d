@@ -701,18 +701,168 @@
 }
 
 /* ══════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE OVERRIDES
    ══════════════════════════════════════ */
-@media (max-width: 900px) {
-  .story-panel        { grid-template-columns: 1fr; padding: 0 var(--space-6); }
-  .story-panel-img    { height: 40vh; }
-  .flavor-sticky      { grid-template-columns: 1fr; }
-  .flavor-product-col { height: 50vh; }
-  .qr-grid, .cta-inner, .product-grid { grid-template-columns: 1fr; }
-  .hero-sequence      { height: 400vh; }
+
+/* Tablets & Small Desktops (max-width: 1024px) */
+@media (max-width: 1024px) {
+  /* Navigation adjustments */
+  .nav {
+    padding: var(--space-4) var(--space-6);
+  }
+  .nav-links {
+    gap: var(--space-4);
+    font-size: 0.9rem;
+  }
+  .nav-cta {
+    padding: var(--space-2) var(--space-4);
+    font-size: 0.8rem;
+  }
+
+  /* Story Section — Convert from horizontal scroll to vertical stack */
+  .story-section {
+    height: auto !important;
+    padding: var(--space-16) 0;
+  }
+  .story-track {
+    position: relative !important;
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+    height: auto !important;
+    gap: var(--space-12);
+    transform: none !important; /* Force reset GSAP transforms */
+  }
+  .story-panel {
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto;
+    grid-template-columns: 1fr; /* Stack text and image */
+    padding: 0 var(--space-6);
+    gap: var(--space-6);
+  }
+  .story-panel-img {
+    grid-row: 1; /* Place image at top of the panel */
+    aspect-ratio: 16 / 10;
+    max-height: 50vh;
+  }
+  .story-panel-content {
+    padding: var(--space-6);
+    background: rgba(0,0,0,0.5);
+  }
+
+  /* Flavor Section — Stack layout but maintain sticky visual can */
+  .flavor-section {
+    height: auto !important;
+    padding: var(--space-12) 0;
+  }
+  .flavor-sticky {
+    position: relative !important;
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .flavor-product-col {
+    position: sticky !important;
+    top: 80px; /* Stick below mobile header */
+    height: 40vh !important;
+    z-index: 10;
+    pointer-events: none; /* Let user scroll through the image */
+  }
+  .flavor-can-wrap {
+    width: 180px; /* Shrink can for mobile */
+  }
+  .flavor-info-col {
+    position: relative;
+    z-index: 5;
+    margin-top: -5vh;
+    padding: 0 var(--space-6);
+  }
+  .flavor-item {
+    min-height: auto !important;
+    padding: var(--space-8) var(--space-6) !important;
+    margin-bottom: var(--space-16);
+    background: rgba(10, 15, 30, 0.7);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(10px);
+  }
+
+  /* Social Track — Enable native horizontal touch swiping */
+  .social-section {
+    padding: var(--space-16) 0;
+  }
+  .social-track-outer {
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    padding: 0 var(--space-6);
+    -webkit-overflow-scrolling: touch;
+  }
+  .social-track {
+    width: max-content !important;
+    transform: none !important; /* Disable GSAP scroll transform */
+    gap: var(--space-4) !important;
+    display: flex;
+  }
+  .social-card {
+    scroll-snap-align: start;
+    width: 280px !important;
+    flex-shrink: 0;
+  }
+
+  /* QR Code Grid */
+  .qr-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+  .qr-card {
+    padding: var(--space-8) var(--space-6);
+  }
+
+  /* Products Grid */
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
 }
 
-@media (max-width: 640px) {
-  .seq-title  { font-size: 3rem; }
-  .nav-links, .nav-cta { display: none; }
+/* Mobile Devices (max-width: 768px) */
+@media (max-width: 768px) {
+  /* Logo and Header */
+  .logo {
+    font-size: 1.3rem;
+  }
+  .nav-links {
+    font-size: 0.8rem;
+    gap: var(--space-3);
+  }
+  .nav-cta {
+    display: none; /* Hide CTA button on tiny screens to save space */
+  }
+
+  /* Hero / Intro Title sizes */
+  .seq-title {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    line-height: 1.2;
+  }
+  .seq-subtitle {
+    font-size: 1rem;
+  }
+
+  /* Story panels text */
+  .story-heading {
+    font-size: 2rem;
+  }
+  .story-para {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* Footer Links */
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+  }
 }
